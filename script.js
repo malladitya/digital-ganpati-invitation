@@ -55,7 +55,36 @@ const CONFIG = {
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 
-window.addEventListener("load", () => setTimeout(() => $("#loader").classList.add("hidden"), 1200));
+window.addEventListener("load", () => {
+  setTimeout(() => $("#loader").classList.add("hidden"), 1200);
+  const bg = $("#bgAudio");
+  
+  const tryPlayBgMusic = () => {
+    if (bg && bg.paused && !isBgMusicEnabled) {
+      bg.play().then(() => {
+        isBgMusicEnabled = true;
+        $("#soundToggle").textContent = "♫";
+      }).catch(() => {
+        console.log("Autoplay blocked, waiting for user interaction...");
+      });
+    }
+  };
+
+  // Try to play immediately (works in some browsers if previously allowed)
+  tryPlayBgMusic();
+
+  // Fallback: wait for the very first interaction (click, touch, or scroll)
+  const unlockAudio = () => {
+    tryPlayBgMusic();
+    document.removeEventListener("click", unlockAudio);
+    document.removeEventListener("touchstart", unlockAudio);
+    document.removeEventListener("scroll", unlockAudio);
+  };
+
+  document.addEventListener("click", unlockAudio);
+  document.addEventListener("touchstart", unlockAudio);
+  document.addEventListener("scroll", unlockAudio);
+});
 
 $("#familyName").textContent = CONFIG.familyName;
 $("#eventDate").textContent = CONFIG.date;
