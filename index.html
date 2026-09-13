@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6e1f19">
+  <meta name="description" content="A premium digital Ganpati invitation and darshan experience.">
+  <title>श्री गणेशाय नमः • Ganpati Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="loader" class="loader">
+    <div class="loader-symbol">ॐ</div>
+    <div class="loader-line"></div>
+    <p>श्री गणेशाय नमः</p>
+  </div>
+
+  <div class="petals" id="petals"></div>
+  <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">♪</button>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-orb"></div>
+      <div class="hero-copy reveal">
+        <span class="eyebrow">A DIGITAL DARSHAN EXPERIENCE</span>
+        <div class="om">ॐ</div>
+        <h1>Ganpati<br><em>Bappa</em> Morya</h1>
+        <p class="devanagari">वक्रतुण्ड महाकाय सूर्यकोटि समप्रभः</p>
+        <p class="hero-sub">
+          इस पावन अवसर पर विघ्नहर्ता, सुखकर्ता, मंगलमूर्ति गणपति बप्पा<br>
+          का पावन आगमन हो रहा है। आपकी सादर उपस्थिति इस मंगल बेला<br>
+          को और अधिक दिव्यता प्रदान करेगी।
+        </p>
+        <button class="gold-btn" id="enterBtn">Enter Invitation <span>↓</span></button>
+      </div>
+      <div class="scroll-hint">SCROLL TO DISCOVER</div>
+    </section>
+
+    <section class="invitation section">
+      <div class="section-tag">01 — THE INVITATION</div>
+      <div class="invite-grid">
+        <div class="ganesh-art reveal">
+          <div class="art-caption">॥ श्री गणेशाय नमः ॥</div>
+        </div>
+        <div class="invite-content reveal">
+          <p class="eyebrow">गणेश चतुर्थी महोत्सव - सादर निमंत्रण</p>
+          <h2>इस बार खास -<br><em>महाराष्ट्रीयन लुक के साथ</em></h2>
+          <p class="lead">
+            आइए, हम सब मिलकर - मधुर भजन-कीर्तन, पावन आरती, मंगलमयी प्रसाद<br>
+            के साथ गणपति बप्पा की कृपा व आशीर्वाद प्राप्त करें
+          </p>
+          <div class="details">
+            <div><span>HOSTED BY</span><strong id="familyName">[Your Family Name]</strong></div>
+            <div><span>DATE</span><strong id="eventDate">[DD Month YYYY]</strong></div>
+            <div><span>PUJA</span><strong id="pujaTime">[Time]</strong></div>
+            <div><span>VENUE</span><strong id="venue">[Your Address]</strong></div>
+          </div>
+          <div class="actions">
+            <button class="outline-btn" id="calendarBtn">＋ Add to Calendar</button>
+            <button class="outline-btn" id="mapBtn">↗ Get Directions</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="schedule section">
+      <div class="section-tag">02 — THE DAY</div>
+      <div class="section-heading">
+        <span class="eyebrow">A LITTLE TIMELINE</span>
+        <h2>Moments of <em>blessings</em></h2>
+      </div>
+      <div class="timeline" id="timeline"></div>
+    </section>
+
+    <section class="darshan section" id="darshan">
+      <div class="darshan-inner">
+        <div class="section-tag">03 — DIGITAL DARSHAN</div>
+        <span class="eyebrow">TAKE A MOMENT</span>
+        <h2>Pause.<br><em>Pray. Feel the presence.</em></h2>
+        <div class="darshan-idol">
+          <div class="idol-glow"></div>
+          <div class="idol-symbol">ॐ</div>
+          <div class="diya"><span></span></div>
+          <div class="petal-ring"></div>
+        </div>
+        <p class="mantra">“ॐ गं गणपतये नमः”</p>
+        <button class="gold-btn" id="blessBtn">Offer a Flower ✦</button>
+        <div id="blessingMessage" class="blessing-message"></div>
+      </div>
+    </section>
+
+    <section class="aarti section">
+      <div class="section-tag">04 — AARTI</div>
+      <div class="section-heading">
+        <span class="eyebrow">LISTEN • READ • PRAY</span>
+        <h2>Let the <em>aarti</em> begin</h2>
+      </div>
+      <div class="aarti-grid" id="aartiList"></div>
+      <div class="audio-player" id="audioPlayer">
+        <div class="track-meta">
+          <span id="trackNumber">01</span>
+          <div><small>NOW PLAYING</small><strong id="trackTitle">Select an aarti</strong></div>
+        </div>
+        <button id="playBtn" class="play-btn">▶</button>
+        <div class="progress-wrap">
+          <div class="progress" id="progress"></div>
+        </div>
+        <span id="duration">0:00</span>
+        <audio id="audio"></audio>
+      </div>
+    </section>
+
+    <section class="lyrics section" id="lyricsSection">
+      <div class="section-tag">05 — LYRICS</div>
+      <div class="lyrics-card">
+        <span class="eyebrow">DEVOTIONAL WORDS</span>
+        <h2 id="lyricsTitle">Aarti Lyrics</h2>
+        <div id="lyricsText" class="lyrics-text"></div>
+      </div>
+    </section>
+
+    <section class="gallery section">
+      <div class="section-tag">06 — MEMORIES</div>
+      <div class="section-heading">
+        <span class="eyebrow">FROM OUR HOME</span>
+        <h2>Little moments,<br><em>lasting memories.</em></h2>
+      </div>
+      <div class="gallery-grid" id="gallery">
+        <div class="memory-card large">
+          <div class="memory-placeholder">✦<span>Ganpati Preparations</span></div>
+        </div>
+        <div class="memory-card">
+          <div class="memory-placeholder">ॐ<span>Decoration</span></div>
+        </div>
+        <div class="memory-card">
+          <div class="memory-placeholder">❋<span>Family</span></div>
+        </div>
+        <div class="memory-card wide">
+          <div class="memory-placeholder">✦<span>Ganpati Bappa Morya</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blessings section">
+      <div class="section-tag">07 — BLESSINGS</div>
+      <div class="blessings-wrap">
+        <div class="section-heading">
+          <span class="eyebrow">LEAVE A LITTLE LOVE</span>
+          <h2>Your blessings<br><em>mean everything.</em></h2>
+        </div>
+        <form id="blessingForm" class="blessing-form">
+          <input id="guestName" type="text" placeholder="Your name" maxlength="40" required>
+          <textarea id="guestMessage" placeholder="Write a blessing..." maxlength="180" required></textarea>
+          <button class="gold-btn" type="submit">Send Blessing ✦</button>
+        </form>
+        <div id="guestBlessings" class="guest-blessings"></div>
+      </div>
+    </section>
+
+    <section class="final section">
+      <div class="final-symbol">ॐ</div>
+      <span class="eyebrow">UNTIL WE MEET</span>
+      <h2>Ganpati Bappa<br><em>Morya!</em></h2>
+      <p>भगवान गणेश जी के आशीर्वाद के साथ आइए,<br>मिलकर गणेश जी का आशीर्वाद ग्रहण करें।</p>
+      <div class="share-actions">
+        <button class="gold-btn" id="shareBtn">Share Invitation ↗</button>
+        <button class="outline-btn light" id="copyBtn">Copy Link</button>
+      </div>
+      <small>Made with devotion • MALL FAMILY </small>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

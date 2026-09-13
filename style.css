@@ -1,0 +1,836 @@
+:root {
+  --maroon: #5d1715;
+  --deep: #2a0908;
+  --saffron: #c96b20;
+  --gold: #d6a34a;
+  --cream: #fbf4e7;
+  --paper: #f3e6d1;
+  --ink: #321512;
+  --muted: #7d6258;
+  --line: rgba(111, 54, 35, .18);
+  --shadow: 0 24px 80px rgba(47, 18, 10, .13);
+}
+
+* {
+  box-sizing: border-box
+}
+
+html {
+  scroll-behavior: smooth
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "DM Sans", sans-serif
+}
+
+button,
+input,
+textarea {
+  font: inherit
+}
+
+button {
+  cursor: pointer
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  background: var(--deep);
+  color: #e8bf70;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  transition: opacity .8s, visibility .8s
+}
+
+.loader.hidden {
+  opacity: 0;
+  visibility: hidden
+}
+
+.loader-symbol {
+  font-family: "Noto Serif Devanagari";
+  font-size: 80px;
+  animation: pulse 2s infinite
+}
+
+.loader-line {
+  width: 90px;
+  height: 1px;
+  background: #a87432;
+  margin: 15px auto
+}
+
+.loader p {
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-size: 11px
+}
+
+.sound-toggle {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .3);
+  background: rgba(43, 12, 9, .6);
+  color: #fff;
+  z-index: 50;
+  backdrop-filter: blur(10px)
+}
+
+.hero {
+  min-height: 100svh;
+  background: radial-gradient(circle at 50% 38%, #7b2b1f 0, #45100e 42%, #220807 100%);
+  color: #fff;
+  position: relative;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  overflow: hidden
+}
+
+.hero:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 70%, rgba(20, 4, 3, .6));
+  pointer-events: none
+}
+
+.hero-orb {
+  position: absolute;
+  width: 55vw;
+  height: 55vw;
+  max-width: 700px;
+  max-height: 700px;
+  border: 1px solid rgba(225, 174, 79, .18);
+  border-radius: 50%;
+  box-shadow: 0 0 150px rgba(214, 163, 74, .13), inset 0 0 100px rgba(214, 163, 74, .08)
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  padding: 40px 20px
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 4px;
+  font-weight: 700;
+  opacity: .78
+}
+
+.om,
+.final-symbol {
+  font-family: "Noto Serif Devanagari";
+  font-size: 58px;
+  color: #e0b45f;
+  margin: 18px 0
+}
+
+h1,
+h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  line-height: .88;
+  margin: 0
+}
+
+h1 {
+  font-size: clamp(70px, 12vw, 150px);
+  letter-spacing: -4px
+}
+
+h1 em,
+h2 em {
+  color: #d7a24d;
+  font-style: italic
+}
+
+.devanagari {
+  font-family: "Noto Serif Devanagari";
+  font-size: 17px;
+  margin: 30px 0 8px;
+  color: #edc982
+}
+
+.hero-sub {
+  line-height: 1.7;
+  color: #e7d7c8
+}
+
+.gold-btn {
+  border: 0;
+  background: linear-gradient(135deg, #e0b15d, #ad7125);
+  color: #2c1009;
+  padding: 15px 24px;
+  border-radius: 999px;
+  font-weight: 700;
+  box-shadow: 0 12px 30px rgba(174, 113, 37, .22);
+  transition: .3s
+}
+
+.gold-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 35px rgba(174, 113, 37, .3)
+}
+
+.hero .gold-btn {
+  margin-top: 22px
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 28px;
+  letter-spacing: 3px;
+  font-size: 9px;
+  opacity: .5;
+  z-index: 2
+}
+
+.section {
+  padding: 120px max(22px, calc((100vw - 1120px)/2));
+  position: relative
+}
+
+.section-tag {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--saffron);
+  font-weight: 800;
+  margin-bottom: 45px
+}
+
+.invite-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 90px;
+  align-items: center
+}
+
+.ganesh-art {
+  height: 600px;
+  background: linear-gradient(to top, rgba(93,23,21,0.8), rgba(0,0,0,0.1)), url('assets/ganesh_hero.jpg') center/cover no-repeat;
+  border-radius: 300px 300px 20px 20px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  box-shadow: var(--shadow)
+}
+
+.ganesh-art:before {
+  content: "";
+  position: absolute;
+  inset: 35px;
+  border: 1px solid rgba(255, 255, 255, .35);
+  border-radius: 280px 280px 10px 10px
+}
+
+.halo {
+  width: 330px;
+  height: 330px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .35);
+  box-shadow: 0 0 100px rgba(255, 255, 255, .25)
+}
+
+.ganesh-symbol {
+  position: absolute;
+  font-family: "Noto Serif Devanagari";
+  font-size: 140px;
+  color: #5c1914
+}
+
+.art-caption {
+  position: absolute;
+  bottom: 38px;
+  font-family: "Noto Serif Devanagari";
+  font-size: 13px;
+  color: #fff4df
+}
+
+.invite-content h2,
+.section-heading h2 {
+  font-size: clamp(55px, 7vw, 92px);
+  margin: 20px 0 30px
+}
+
+.lead {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.9;
+  max-width: 540px
+}
+
+.details {
+  border-top: 1px solid var(--line);
+  margin-top: 40px
+}
+
+.details div {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px
+}
+
+.details span {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  font-weight: 700
+}
+
+.details strong {
+  font-size: 13px;
+  text-align: right
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+  flex-wrap: wrap
+}
+
+.outline-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 13px 19px;
+  color: var(--ink);
+  transition: .3s
+}
+
+.outline-btn:hover {
+  background: #fff
+}
+
+.schedule {
+  background: var(--paper)
+}
+
+.section-heading {
+  max-width: 800px;
+  margin-bottom: 60px
+}
+
+.timeline {
+  max-width: 850px;
+  margin: auto;
+  border-left: 1px solid rgba(111, 54, 35, .25)
+}
+
+.timeline-item {
+  position: relative;
+  padding: 0 0 55px 55px
+}
+
+.timeline-item:before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 4px;
+  width: 9px;
+  height: 9px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px var(--paper)
+}
+
+.timeline-item time {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--saffron);
+  font-weight: 800
+}
+
+.timeline-item h3 {
+  font-family: "Cormorant Garamond";
+  font-size: 35px;
+  margin: 10px 0 6px
+}
+
+.timeline-item p {
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.6
+}
+
+.darshan {
+  background: radial-gradient(circle at 50% 45%, #6f241a, #3a0d0b 55%, #210706);
+  color: white;
+  text-align: center;
+  overflow: hidden
+}
+
+.darshan .section-tag {
+  color: #dcae59
+}
+
+.darshan .eyebrow {
+  color: #ead1aa
+}
+
+.darshan h2 {
+  font-size: clamp(55px, 7vw, 90px);
+  margin: 20px 0
+}
+
+.darshan-idol {
+  height: 480px;
+  width: min(90vw, 520px);
+  margin: 30px auto 15px;
+  position: relative;
+  display: grid;
+  place-items: center
+}
+
+.idol-glow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(226, 171, 76, .55), rgba(226, 171, 76, 0) 70%);
+  animation: breathe 4s ease-in-out infinite
+}
+
+.idol-symbol {
+  font-family: "Noto Serif Devanagari";
+  font-size: 180px;
+  color: #e7bb69;
+  z-index: 2;
+  text-shadow: 0 0 45px rgba(231, 187, 105, .35)
+}
+
+.diya {
+  position: absolute;
+  bottom: 40px;
+  width: 72px;
+  height: 30px;
+  border-radius: 0 0 50px 50px;
+  background: #a75a22;
+  z-index: 3
+}
+
+.diya span {
+  position: absolute;
+  left: 27px;
+  top: -25px;
+  width: 18px;
+  height: 28px;
+  background: #ffd778;
+  border-radius: 70% 30% 70% 30%;
+  transform: rotate(45deg);
+  filter: drop-shadow(0 0 12px #ffd778);
+  animation: flicker .8s infinite
+}
+
+.mantra {
+  font-family: "Noto Serif Devanagari";
+  font-size: 22px;
+  color: #efc779;
+  margin: 20px
+}
+
+.blessing-message {
+  height: 24px;
+  margin-top: 18px;
+  color: #e8d0a8;
+  font-size: 12px
+}
+
+.aarti {
+  background: #f8eddd
+}
+
+.aarti-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px
+}
+
+.aarti-card {
+  padding: 28px;
+  background: #fffaf2;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  transition: .3s
+}
+
+.aarti-card.active {
+  border-color: #c8943f;
+  box-shadow: var(--shadow);
+  transform: translateY(-4px)
+}
+
+.aarti-card .num {
+  font-size: 10px;
+  color: var(--saffron);
+  letter-spacing: 2px
+}
+
+.aarti-card h3 {
+  font-family: "Cormorant Garamond";
+  font-size: 30px;
+  margin: 14px 0
+}
+
+.aarti-card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5
+}
+
+.aarti-card button {
+  margin-top: 10px
+}
+
+.audio-player {
+  margin-top: 35px;
+  padding: 20px 24px;
+  border-radius: 18px;
+  background: #3a0e0b;
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 50px 1fr auto;
+  gap: 18px;
+  align-items: center
+}
+
+.track-meta {
+  display: flex;
+  gap: 15px;
+  align-items: center
+}
+
+.track-meta>span {
+  font-family: "Cormorant Garamond";
+  font-size: 30px;
+  color: #d9ad62
+}
+
+.track-meta small {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: #d5b993
+}
+
+.track-meta strong {
+  display: block;
+  font-size: 12px;
+  margin-top: 3px
+}
+
+.play-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 0;
+  background: #d8aa58;
+  color: #32100b
+}
+
+.progress-wrap {
+  height: 4px;
+  background: #6b3931;
+  border-radius: 9px;
+  overflow: hidden
+}
+
+.progress {
+  width: 0;
+  height: 100%;
+  background: #d9ad62
+}
+
+.audio-player>span {
+  font-size: 10px;
+  color: #d7b995
+}
+
+.lyrics {
+  background: var(--paper)
+}
+
+.lyrics-card {
+  max-width: 780px;
+  margin: auto;
+  background: #fffaf1;
+  padding: 60px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: var(--shadow)
+}
+
+.lyrics-card h2 {
+  font-size: 55px;
+  margin: 15px 0 30px
+}
+
+.lyrics-text {
+  white-space: pre-line;
+  font-family: "Noto Serif Devanagari";
+  font-size: 18px;
+  line-height: 2.2;
+  color: #65433a
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  grid-auto-rows: 260px;
+  gap: 14px
+}
+
+.memory-card {
+  overflow: hidden;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #e5c79c, #a96436)
+}
+
+.memory-card.large {
+  grid-row: span 2
+}
+
+.memory-card.wide {
+  grid-column: span 2
+}
+
+.memory-placeholder {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 15px;
+  color: #fff4e5;
+  font-family: "Cormorant Garamond";
+  font-size: 55px;
+  background: linear-gradient(135deg, rgba(94, 23, 17, .18), rgba(0, 0, 0, .18))
+}
+
+.memory-placeholder span {
+  font-family: "DM Sans";
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase
+}
+
+.blessings {
+  background: #fffaf1
+}
+
+.blessings-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: start
+}
+
+.blessing-form {
+  display: grid;
+  gap: 12px
+}
+
+.blessing-form input,
+.blessing-form textarea {
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  outline: 0
+}
+
+.blessing-form textarea {
+  min-height: 130px;
+  resize: vertical
+}
+
+.guest-blessings {
+  grid-column: 1/-1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px
+}
+
+.guest-card {
+  padding: 22px;
+  background: #f5ead9;
+  border-radius: 15px
+}
+
+.guest-card strong {
+  font-family: "Cormorant Garamond";
+  font-size: 22px
+}
+
+.guest-card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6
+}
+
+.final {
+  background: #290807;
+  color: #fff;
+  text-align: center;
+  min-height: 80vh;
+  display: grid;
+  place-items: center;
+  align-content: center
+}
+
+.final h2 {
+  font-size: clamp(65px, 9vw, 115px);
+  margin: 20px 0 30px
+}
+
+.final p {
+  max-width: 530px;
+  line-height: 1.8;
+  color: #d7c4b7
+}
+
+.final small {
+  margin-top: 55px;
+  color: #8e6d64;
+  letter-spacing: 2px
+}
+
+.share-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap
+}
+
+.outline-btn.light {
+  color: #fff;
+  border-color: rgba(255, 255, 255, .25)
+}
+
+.petals {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  overflow: hidden
+}
+
+.petal {
+  position: absolute;
+  width: 7px;
+  height: 12px;
+  background: #d69b4a;
+  border-radius: 100% 0 100% 0;
+  opacity: .45;
+  animation: fall linear forwards
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: 1s ease
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.08);
+    opacity: .7
+  }
+}
+
+@keyframes breathe {
+  50% {
+    transform: scale(1.12);
+    opacity: .7
+  }
+}
+
+@keyframes flicker {
+  50% {
+    transform: rotate(35deg) scale(.88)
+  }
+}
+
+@keyframes fall {
+  to {
+    transform: translate3d(100px, 110vh, 0) rotate(500deg);
+    opacity: 0
+  }
+}
+
+@media(max-width:800px) {
+  .section {
+    padding: 85px 20px
+  }
+
+  .invite-grid,
+  .blessings-wrap {
+    grid-template-columns: 1fr;
+    gap: 45px
+  }
+
+  .ganesh-art {
+    height: 450px
+  }
+
+  .aarti-grid {
+    grid-template-columns: 1fr
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 220px
+  }
+
+  .memory-card.large,
+  .memory-card.wide {
+    grid-row: auto;
+    grid-column: auto
+  }
+
+  .audio-player {
+    grid-template-columns: 1fr 50px;
+  }
+
+  .progress-wrap {
+    grid-column: 1/-1
+  }
+
+  .audio-player>span {
+    display: none
+  }
+
+  .lyrics-card {
+    padding: 35px 20px
+  }
+
+  .guest-blessings {
+    grid-template-columns: 1fr
+  }
+
+  .details div {
+    align-items: flex-start
+  }
+
+  h1 {
+    letter-spacing: -2px
+  }
+}
