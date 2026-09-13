@@ -74,6 +74,8 @@ $("#aartiList").innerHTML = CONFIG.aartis.map((x, i) =>
 ).join("");
 
 const audio = $("#audio"), playBtn = $("#playBtn"), progress = $("#progress");
+const bgAudio = $("#bgAudio");
+let isBgMusicEnabled = false;
 let current = 0;
 
 function loadTrack(i, autoplay = false) {
@@ -96,8 +98,14 @@ playBtn.addEventListener("click", () => {
   if (audio.paused) { audio.play().catch(() => { }); playBtn.textContent = "❚❚" }
   else { audio.pause(); playBtn.textContent = "▶" }
 });
-audio.addEventListener("play", () => playBtn.textContent = "❚❚");
-audio.addEventListener("pause", () => playBtn.textContent = "▶");
+audio.addEventListener("play", () => {
+  playBtn.textContent = "❚❚";
+  if (isBgMusicEnabled && bgAudio) bgAudio.pause();
+});
+audio.addEventListener("pause", () => {
+  playBtn.textContent = "▶";
+  if (isBgMusicEnabled && bgAudio) bgAudio.play().catch(() => {});
+});
 audio.addEventListener("timeupdate", () => {
   if (audio.duration) progress.style.width = (audio.currentTime / audio.duration * 100) + "%";
   $("#duration").textContent = formatTime(audio.currentTime);
@@ -113,7 +121,15 @@ $("#calendarBtn").onclick = () => {
   window.open(url, "_blank");
 };
 
-$("#enterBtn").onclick = () => document.querySelector(".invitation").scrollIntoView({ behavior: "smooth" });
+$("#enterBtn").onclick = () => {
+  document.querySelector(".invitation").scrollIntoView({ behavior: "smooth" });
+  if (bgAudio && bgAudio.paused && !isBgMusicEnabled) {
+    bgAudio.play().then(() => {
+      isBgMusicEnabled = true;
+      $("#soundToggle").textContent = "♫";
+    }).catch(() => {});
+  }
+};
 $("#blessBtn").onclick = () => {
   const msg = $("#blessingMessage"); msg.textContent = "🌸 Flower offered with devotion. Ganpati Bappa Morya!";
   for (let i = 0; i < 18; i++) makePetal(true);
@@ -140,13 +156,29 @@ $("#blessingForm").addEventListener("submit", e => {
 });
 function escapeHtml(s) { return s.replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[m])) }
 
+function fallbackCopyTextToClipboard(text) {
+  if (navigator.clipboard) { navigator.clipboard.writeText(text).catch(()=>{}); return; }
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.position = "fixed";
+  document.body.appendChild(textArea);
+  textArea.select();
+  try { document.execCommand('copy'); } catch (err) {}
+  document.body.removeChild(textArea);
+}
+
 $("#shareBtn").onclick = async () => {
   const data = { title: "Ganpati Invitation", text: `You're invited to our Ganpati Puja by ${CONFIG.familyName}. Ganpati Bappa Morya!`, url: location.href };
-  if (navigator.share) await navigator.share(data);
-  else { await navigator.clipboard.writeText(location.href); alert("Invitation link copied!"); }
+  if (navigator.share) {
+    try { await navigator.share(data); } catch (e) {}
+  } else {
+    fallbackCopyTextToClipboard(location.href);
+    alert("Invitation link copied!");
+  }
 };
-$("#copyBtn").onclick = async () => {
-  await navigator.clipboard.writeText(location.href); $("#copyBtn").textContent = "Copied ✓";
+$("#copyBtn").onclick = () => {
+  fallbackCopyTextToClipboard(location.href);
+  $("#copyBtn").textContent = "Copied ✓";
   setTimeout(() => $("#copyBtn").textContent = "Copy Link", 2000);
 };
 
@@ -156,6 +188,14 @@ const observer = new IntersectionObserver(entries => {
 $$(".reveal").forEach(x => observer.observe(x));
 
 $("#soundToggle").onclick = () => {
-  if (audio.paused) { if (!audio.src) loadTrack(0, true); else audio.play(); $("#soundToggle").textContent = "♫" }
-  else { audio.pause(); $("#soundToggle").textContent = "♪" }
+  if (isBgMusicEnabled) {
+    isBgMusicEnabled = false;
+    if (bgAudio) bgAudio.pause();
+    if (!audio.paused) audio.pause();
+    $("#soundToggle").textContent = "♪";
+  } else {
+    isBgMusicEnabled = true;
+    if (bgAudio && audio.paused) bgAudio.play().catch(()=>{});
+    $("#soundToggle").textContent = "♫";
+  }
 };
